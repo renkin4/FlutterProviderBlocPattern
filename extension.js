@@ -28,27 +28,32 @@ function activate(context) {
 		let choosenPath = await vscode.window.showInputBox({prompt: "Folder Path", value : path.join(rootFolderPath, "lib")});
 		let name = await vscode.window.showInputBox({prompt: "Bloc Name"});
 
+		let upperCaseName = name[0].toUpperCase() + name.substring(1);
+
 		// IDK how to setup template folder so I just keep the strings here
 		let blocFile = `import 'package:flutter/widgets.dart';
-		class ${name}Bloc extends ChangeNotifier {
+		class ${upperCaseName}Bloc extends ChangeNotifier {
 			BuildContext context;
 
-			${name}Bloc({@required this.context});
+			${upperCaseName}Bloc({@required this.context});
 		}`;
 
-		let repoFile = `class ${name}Repository{}`;
+		let repoFile = `class ${upperCaseName}Repository{}`;
 
 		let defaultFile = `import 'package:flutter/material.dart';
-		
-		class ${name}Screen extends StatefulWidget {
-			${name}Screen({Key key}) : super(key: key);
+		import 'package:projectpolice/features/${name}/network/${name}_repository.dart';
+		import 'package:provider/provider.dart';
+		import 'package:projectpolice/features/${name}/bloc/${name}_bloc.dart';
+
+		class ${upperCaseName}Screen extends StatefulWidget {
+			${upperCaseName}Screen({Key key}) : super(key: key);
 		  
 			@override
-			_${name}ScreenState createState() => _${name}ScreenState();
+			_${upperCaseName}ScreenState createState() => _${upperCaseName}ScreenState();
 		}
 
-		class _${name}ScreenState extends State<${name}Screen> {
-			final ${name}Repository _repository = ${name}Repository();
+		class _${upperCaseName}ScreenState extends State<${upperCaseName}Screen> {
+			final ${upperCaseName}Repository _repository = ${upperCaseName}Repository();
 
 			@override
 			void initState() {
@@ -59,7 +64,7 @@ function activate(context) {
 			Widget build(BuildContext context) {
 				return Scaffold(
 					body : ChangeNotifierProvider(
-						create: (BuildContext context) => ${name}Bloc(context : context),
+						create: (BuildContext context) => ${upperCaseName}Bloc(context : context),
 						child: Container(),
 					),
 				);

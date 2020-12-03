@@ -2,7 +2,7 @@
 	"name": "flutterproviderblocpattern",
 	"displayName": "FlutterProviderBlocPattern",
 	"description": "Help generate folders and files for bloc pattern using provider. (Flutter / dart)",
-	"version": "0.0.3",
+	"version": "0.0.4",
 	"engines": {
 		"vscode": "^1.51.0"
 	},
