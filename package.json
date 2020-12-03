@@ -12,6 +12,7 @@
 	"activationEvents": [
 		"onCommand:flutterproviderblocpattern.createFlutterBloc"
 	],
+	"publisher": "YangDeveloper",
 	"main": "./extension.js",
 	"contributes": {
 		"commands": [
