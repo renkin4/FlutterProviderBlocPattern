@@ -1,6 +1,8 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 const vscode = require('vscode');
+const fs = require("fs");
+const path = require('path'); 
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -19,23 +21,22 @@ function activate(context) {
 	// The commandId parameter must match the command field in package.json
 	let disposable = vscode.commands.registerCommand('flutterproviderblocpattern.createFlutterBloc', async function () {
 		// The code you place here will be executed every time your command is executed
-		let path = require('path'); 
-		let folderPath = vscode.env.appRoot; // get the open folder path 
+		let folderPath = vscode.workspace.workspaceFolders[0]; // get the open folder path 
 		// Display a message box to the user
-		let choosenPath = await vscode.window.showInputBox({prompt: "Folder Path", value : path.join(folderPath, "lib")});
+		let choosenPath = await vscode.window.showInputBox({prompt: "Folder Path", value : path.join(folderPath.name, "lib")});
 		let name = await vscode.window.showInputBox({prompt: "Bloc Name"});
 
 		// IDK how to setup template folder so I just keep the strings here
-		let blocFile = String.raw`import 'package:flutter/widgets.dart';
+		let blocFile = `import 'package:flutter/widgets.dart';
 		class ${name}Bloc extends ChangeNotifier {
 			BuildContext context;
 
 			${name}Bloc({@required this.context});
 		}`;
 
-		let repoFile = String.raw`class ${name}Repository{}`;
+		let repoFile = `class ${name}Repository{}`;
 
-		let defaultFile = String.raw`import 'package:flutter/material.dart';
+		let defaultFile = `import 'package:flutter/material.dart';
 		
 		class ${name}Screen extends StatefulWidget {
 			${name}Screen({Key key}) : super(key: key);
@@ -68,9 +69,16 @@ function activate(context) {
 		let networkFilePath = path.join(path.join(choosenPath, "network"), `${name}_repository.dart`);
 		let uiFilePath = path.join(path.join(choosenPath, "ui"), `${name}.dart`);
 
-		await vscode.workspace.fs.writeFile(vscode.Uri.parse(blocFilePath), Buffer.from(blocFile));
-		await vscode.workspace.fs.writeFile(vscode.Uri.parse(networkFilePath), Buffer.from(repoFile));
-		await vscode.workspace.fs.writeFile(vscode.Uri.parse(uiFilePath), Buffer.from(defaultFile));
+		let errorHandler = (err) => {
+			if(err){
+				console.error(err);
+				return vscode.window.showErrorMessage("Failed to genrate folder structure");
+			}
+		}
+
+		await fs.writeFile(blocFilePath, blocFile, errorHandler);
+		await fs.writeFile(networkFilePath, repoFile,errorHandler);
+		await fs.writeFile(uiFilePath, defaultFile,errorHandler);
 
 		vscode.window.showInformationMessage("Yep Finish. Enjoy =D");
 	});
