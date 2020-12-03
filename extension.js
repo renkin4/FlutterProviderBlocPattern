@@ -23,6 +23,7 @@ function activate(context) {
 		// The code you place here will be executed every time your command is executed
 		let folderPath = vscode.workspace.workspaceFolders; // get the open folder path 
 		let rootFolderPath = folderPath[0].uri.fsPath;
+
 		// Display a message box to the user
 		let choosenPath = await vscode.window.showInputBox({prompt: "Folder Path", value : path.join(rootFolderPath, "lib")});
 		let name = await vscode.window.showInputBox({prompt: "Bloc Name"});
@@ -92,11 +93,15 @@ function activate(context) {
 			}
 		}
 
-		await fs.writeFile(blocFilePath, blocFile, errorHandler);
-		await fs.writeFile(networkFilePath, repoFile,errorHandler);
-		await fs.writeFile(uiFilePath, defaultFile,errorHandler);
+		// EHemm Hard code =X
+		await setTimeout(() => {
+			fs.writeFile(blocFilePath, blocFile, errorHandler);
+			fs.writeFile(networkFilePath, repoFile,errorHandler);
+			fs.writeFile(uiFilePath, defaultFile,errorHandler);
 
-		vscode.window.showInformationMessage("Yep Finish. Enjoy =D");
+			vscode.window.showInformationMessage("Yep Finish. Enjoy =D");
+		}, 1000);
+
 	});
 
 	context.subscriptions.push(disposable);
