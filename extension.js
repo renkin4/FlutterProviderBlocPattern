@@ -21,9 +21,10 @@ function activate(context) {
 	// The commandId parameter must match the command field in package.json
 	let disposable = vscode.commands.registerCommand('flutterproviderblocpattern.createFlutterBloc', async function () {
 		// The code you place here will be executed every time your command is executed
-		let folderPath = vscode.workspace.workspaceFolders[0]; // get the open folder path 
+		let folderPath = vscode.workspace.workspaceFolders; // get the open folder path 
+		let rootFolderPath = folderPath[0].uri.fsPath;
 		// Display a message box to the user
-		let choosenPath = await vscode.window.showInputBox({prompt: "Folder Path", value : path.join(folderPath.name, "lib")});
+		let choosenPath = await vscode.window.showInputBox({prompt: "Folder Path", value : path.join(rootFolderPath, "lib")});
 		let name = await vscode.window.showInputBox({prompt: "Bloc Name"});
 
 		// IDK how to setup template folder so I just keep the strings here
@@ -65,9 +66,24 @@ function activate(context) {
 		}
 		`;
 		
-		let blocFilePath = path.join(path.join(choosenPath, "bloc"), `${name}_bloc.dart`);
-		let networkFilePath = path.join(path.join(choosenPath, "network"), `${name}_repository.dart`);
-		let uiFilePath = path.join(path.join(choosenPath, "ui"), `${name}.dart`);
+		let blockFolderPath = path.join(choosenPath, "bloc");
+		let neworkFolderPath = path.join(choosenPath, "network");
+		let uiFolderPath = path.join(choosenPath, "ui");
+
+
+		let blocFilePath = path.join(blockFolderPath, `${name}_bloc.dart`);
+		let networkFilePath = path.join(neworkFolderPath, `${name}_repository.dart`);
+		let uiFilePath = path.join(uiFolderPath, `${name}.dart`);
+
+		if(fs.existsSync(blockFolderPath)){
+			fs.mkdir(blockFolderPath, {recursive : true}, () => {});
+		}
+		if(fs.existsSync(neworkFolderPath)){
+			fs.mkdir(neworkFolderPath, {recursive : true}, () => {});
+		}
+		if(fs.existsSync(uiFolderPath)){
+			fs.mkdir(uiFolderPath, {recursive : true}, () => {});
+		}
 
 		let errorHandler = (err) => {
 			if(err){
