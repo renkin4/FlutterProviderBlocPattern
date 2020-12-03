@@ -12,6 +12,10 @@
 	"activationEvents": [
 		"onCommand:flutterproviderblocpattern.createFlutterBloc"
 	],
+	"repository": {
+		"url": "https://github.com/renkin4/FlutterProviderBlocPattern",
+		"type": "git"
+	},
 	"publisher": "YangDeveloper",
 	"main": "./extension.js",
 	"contributes": {
