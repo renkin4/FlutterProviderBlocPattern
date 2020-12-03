@@ -75,13 +75,13 @@ function activate(context) {
 		let networkFilePath = path.join(neworkFolderPath, `${name}_repository.dart`);
 		let uiFilePath = path.join(uiFolderPath, `${name}.dart`);
 
-		if(fs.existsSync(blockFolderPath)){
+		if(!fs.existsSync(blockFolderPath)){
 			fs.mkdir(blockFolderPath, {recursive : true}, () => {});
 		}
-		if(fs.existsSync(neworkFolderPath)){
+		if(!fs.existsSync(neworkFolderPath)){
 			fs.mkdir(neworkFolderPath, {recursive : true}, () => {});
 		}
-		if(fs.existsSync(uiFolderPath)){
+		if(!fs.existsSync(uiFolderPath)){
 			fs.mkdir(uiFolderPath, {recursive : true}, () => {});
 		}
 
