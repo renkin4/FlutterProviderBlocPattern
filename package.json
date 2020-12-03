@@ -10,14 +10,14 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:flutterproviderblocpattern.helloWorld"
+		"onCommand:flutterproviderblocpattern.createFlutterBloc"
 	],
 	"main": "./extension.js",
 	"contributes": {
 		"commands": [
 			{
-				"command": "flutterproviderblocpattern.helloWorld",
-				"title": "Hello World"
+				"command": "flutterproviderblocpattern.createFlutterBloc",
+				"title": "Create Flutter Bloc Folder Structure"
 			}
 		]
 	},
