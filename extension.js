@@ -39,7 +39,7 @@ function activate(context) {
 		}`;
 
 		let repoFile = `class ${upperCaseName}Repository{}`;
-		const projectName = rootFolderPath.substring(rootFolderPath.lastIndexOf('/') + 1)
+		const projectName = rootFolderPath.substring(rootFolderPath.lastIndexOf('\\') + 1)
 
 		let defaultFile = `import 'package:flutter/material.dart';
 		import 'package:${projectName}/features/${name}/network/${name}_repository.dart';
