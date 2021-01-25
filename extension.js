@@ -39,11 +39,12 @@ function activate(context) {
 		}`;
 
 		let repoFile = `class ${upperCaseName}Repository{}`;
+		const projectName = rootFolderPath.substring(rootFolderPath.lastIndexOf('/') + 1)
 
 		let defaultFile = `import 'package:flutter/material.dart';
-		import 'package:projectpolice/features/${name}/network/${name}_repository.dart';
+		import 'package:${projectName}/features/${name}/network/${name}_repository.dart';
 		import 'package:provider/provider.dart';
-		import 'package:projectpolice/features/${name}/bloc/${name}_bloc.dart';
+		import 'package:${projectName}/features/${name}/bloc/${name}_bloc.dart';
 
 		class ${upperCaseName}Screen extends StatefulWidget {
 			${upperCaseName}Screen({Key key}) : super(key: key);
